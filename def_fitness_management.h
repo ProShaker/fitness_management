@@ -6,11 +6,14 @@ const int name_len = 11;
 
 void action_fitness_management();
 
+void menu_fitness_management();
+
 //일반 회원 클래스
 class normal_management {
 
 //개인정보는 private으로 보호한다.
 private:
+	//이름, 핸드폰 번호, 성별
 	char normal_name[name_len];
 	int normal_hpnumber;
 	char normal_gender;
@@ -34,6 +37,7 @@ public:
 class special_management : normal_management
 {
 public:
+	//수업 시간표, 수업 요일, 트레이너 이름, 총 PT 횟수
 	char class_time;
 	char class_day[2];
 	char trainer[name_len];
