@@ -8,22 +8,34 @@ void action_fitness_management();
 
 void menu_fitness_management();
 
+//메뉴 번호를 저장할 변수, 메모리 관리를 위해 char 자료형을 사용한다.
+char menu_numb;
+
+enum {
+	NORMAL = 1,
+	SPINNING,
+	PT,
+	PILATES,
+	reTurn
+};
 //일반 회원 클래스
 class normal_management {
 
 //개인정보는 private으로 보호한다.
 private:
 	//이름, 핸드폰 번호, 성별
-	char normal_name[name_len];
+	char *normal_name;
 	int normal_hpnumber;
 	char normal_gender;
 
 public:
 //운동 시작일, 운동복 관리 변수는 공용으로 값을 다루기 편하게 한다.
+//회원권 시작일에 const 키워드를 사용해서 이용권 종류를 더한 값이 회원권 종료일이다.
 	const int normal_start;
 	int normal_end;
-	bool normal_cloths;
-	const int normal_locker;
+	char memebership;
+	bool normal_clothes;
+	char normal_locker;
 
 	void add_member();
 	void rewrite_member();
