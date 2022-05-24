@@ -6,15 +6,16 @@ member::member()
 	name = "";			//이름
 	hpnumber = "";		//핸드폰 번호
 	gender = "";		//성별
-	date_class = "";			//수업요일
-	trainer = "";				//담당 트레이너
+	date_class = "";	//수업요일
+	date_start = "";		//시작일
+	date_end = "";		//종료일
+	trainer = "";		//담당 트레이너
 
 	//int, bool 변수
 	member_number = 0;	//회원번호
-	date_start = 0;			//시작일
-	date_end = 0;				//종료일
-	clothes = false;		//운동복 대여여부
-	time_class = 0;				//수업시간
+	
+	clothes = false;	//운동복 대여여부
+	time_class = 0;		//수업시간
 
 	member* next = nullptr;
 }
@@ -54,8 +55,8 @@ void member_list::add_member()
 {
 	member* new_member = new member(); //member 인스턴스 동적할당
 
-	string _name, _hpnumber, _gender;
-	int _date_start, _date_end, _membership, _clothes;
+	string _name, _hpnumber, _gender, _date_start, _date_end, _clothes;
+	int _membership;
 	static int _member_number = 0;
 
 	cout << "추가할 회원님의 정보를 입력해주세요." << endl;
@@ -69,12 +70,12 @@ void member_list::add_member()
 	cout << "성별 (남/여) : ";
 	cin >> _gender;
 
-	cout << "시작일(YYYYMMDD) : ";
+	cout << "시작일(YYMMDD) : ";
 	cin >> _date_start;
 
 	cout << "회원권 종류(개월 수 입력) : ";
 	cin >> _membership;
-	_date_end = _date_start + _membership * 100;
+	_date_end = days_calculate(_date_start, _membership);
 
 	cout << "운동복 대여 여부 (y/n) : ";
 	cin >> _clothes;
@@ -85,7 +86,7 @@ void member_list::add_member()
 	new_member->gender = _gender;
 	new_member->date_start = _date_start;
 	new_member->date_end = _date_end;
-	new_member->clothes = (_clothes == 121) ? true : false; //삼항연산자, y(아스키 코드 121) 입력시 true
+	new_member->clothes = (_clothes == "y") ? true : false; //삼항연산자, y(아스키 코드 121) 입력시 true
 
 	_member_number++;
 
@@ -95,12 +96,12 @@ void member_list::add_member()
 
 void member_list::rewrite_member()
 {
-	int _date_start = 0, _date_end = 0, _membership = 0, _member_number = 0, _clothes = 0;
+	int _membership = 0, _member_number = 0;
+	string _date_end, _clothes;
+	member* current_location = member_location(_member_number); //회원 번호로 회원 정보에 접근하는 포인터변수
 
 	cout << "변경할 회원님의 회원번호를 입력해주세요. : ";
 	cin >> _member_number;
-
-	member* current_location = member_location(_member_number);
 
 	if (current_location == NULL)
 	{
@@ -123,16 +124,16 @@ void member_list::rewrite_member()
 		cout << "성별 (남/여) : ";
 		cin >> current_location->gender;
 
-		cout << "시작일(YYYYMMDD) : ";
+		cout << "시작일(YYMMDD) : ";
 		cin >> current_location->date_start;
 
 		cout << "회원권 종류(개월 수 입력) : ";
 		cin >> _membership;
-		_date_end = _date_start + _membership * 30;
+		_date_end = days_calculate(current_location->date_start, _membership);
 
 		cout << "운동복 대여 여부 (y/n) : ";
 		cin >> _clothes;
-		current_location->clothes = (_clothes == 121) ? true : false;
+		current_location->clothes = (_clothes == "y") ? true : false;
 	}
 }
 
@@ -180,7 +181,7 @@ void member_list::print_member() const
 	for (; current_location != NULL; current_location = current_location->next)
 		member_profile(current_location);
 
-	cout << "모든 회원 정보를 출력했습니다." << endl;
+	cout << "모든 회원 정보를 출력했습니다." << endl << endl;
 }
 
 //회원 객체 삭제 함수
@@ -224,9 +225,9 @@ void menu_fitness_management(member_list* member)
 
 	//각 클래스의 회원관리 메뉴
 	cout << "1. 회원 추가" << endl;
-	cout << "2. 회원 정보 수정(개인 정보, 락커, 운동복)" << endl;
-	cout << "3. 회원 검색(이름, 전화번호, 담당 트레이너 검색 가능)" << endl;
-	cout << "4. 회원 명부 출력(성별로 출력 가능)" << endl;
+	cout << "2. 회원 정보 수정" << endl;
+	cout << "3. 회원 검색" << endl;
+	cout << "4. 회원 명부 출력" << endl;
 	cout << "5. 회원 삭제" << endl;
 	cout << "6. 나가기" << endl << endl;
 
@@ -268,5 +269,20 @@ void menu_fitness_management(member_list* member)
 		cout << "해당 번호는 존재하지 않습니다. 회원 구분 화면으로 돌아갑니다." << endl;
 		cout << "만약 프로그램을 종료하고 싶으시다면 'Ctrl + C'를 눌러주세요." << endl << endl;
 	}
+}
+
+string days_calculate(const string& _start_date, const int& membership) //멤버십의 날짜 계산 함수
+{
+	int _year = stoi(_start_date.substr(0, 2));		//년도
+	int _month = stoi(_start_date.substr(2, 2));	//월
+	int _day = stoi(_start_date.substr(4, 2));		//날짜를 정수화
+
+	if ((_month + membership) > 12)			// 매 달이 12보다 커질경우 날짜 계산
+	{
+		_year += (_month + membership) / 12;
+		_month = (_month + membership) % 12;
+	}
+
+	return to_string(_year * 10000 + _month * 100 + _day); //정수를 문자열로 변환 후 반환
 }
 

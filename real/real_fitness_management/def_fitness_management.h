@@ -18,15 +18,15 @@ public:
 
 //private으로 회원 정보를 보호
 private:
-	string name;			//이름
-	string hpnumber;		//핸드폰 번호
+	string name;		//이름
+	string hpnumber;	//핸드폰 번호
 	string gender;		//성별
-	bool clothes;				//운동복 대여여부
-	int date_start;					//시작일
-	int date_end;						//종료일
-	char time_class;					//수업시간
-	string date_class;				//수업요일
-	string trainer;					//담당 트레이너
+	string date_class;	//수업요일
+	string trainer;		//담당 트레이너
+	string date_start;		//시작일
+	string date_end;		//종료일
+	char time_class;	//수업시간
+	bool clothes;		//운동복 대여여부
 
 	member* next; //다음 멤버의 주소를 가리킬 포인터 변수
 
@@ -37,13 +37,13 @@ private:
 class member_list
 {
 private:
-	member* head; //첫 번째 노트
+	member* head; //첫 번째 노드
 	member* tail; //마지막 노드
 
 	// 특정 회원 객체의 주소를 반환하는 멤버함수
 	member* member_location(const int& member_number);
-
-	void member_profile(member* member) const; //회원정보 출력 함수
+	//회원정보 출력 함수
+	void member_profile(member* member) const; 
 
 public:
 
@@ -59,6 +59,8 @@ public:
 };
 
 void menu_fitness_management(member_list* member); //메뉴 함수
+
+string days_calculate(const string& _start_date, const int& membership); //멤버십 날짜 계산 함수
 
 // 스피닝 클래스 
 class spinning_member : public member_list

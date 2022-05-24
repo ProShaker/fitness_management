@@ -1,5 +1,7 @@
 #include "def_fitness_management.h"
-
+//해결해야 할 문제 : 날짜 계산
+//add_member 안되는 것
+//
 int main()
 {
 	member_list* ptr_member = nullptr;
@@ -37,6 +39,7 @@ int main()
 			pt_member pt;
 			ptr_member = &pt;
 		}
+
 		else if (member_Classification == PILATES)
 		{
 			cout << "필라테스 회원을 선택하셨습니다." << endl << endl;
@@ -44,6 +47,7 @@ int main()
 			pilates_member pilates;
 			ptr_member = &pilates;
 		}
+
 		else
 		{
 			cout << "해당 번호는 존재하지 않습니다. 다시 입력해주세요." << endl;
