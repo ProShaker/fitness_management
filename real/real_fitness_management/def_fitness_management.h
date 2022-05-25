@@ -23,10 +23,10 @@ private:
 	string gender;		//성별
 	string date_class;	//수업요일
 	string trainer;		//담당 트레이너
-	string date_start;		//시작일
-	string date_end;		//종료일
-	char time_class;	//수업시간
-	bool clothes;		//운동복 대여여부
+	string date_start;	//시작일
+	string date_end;	//종료일
+	string time_class;	//수업시간
+	string clothes;		//운동복 대여여부
 
 	member* next; //다음 멤버의 주소를 가리킬 포인터 변수
 

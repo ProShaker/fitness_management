@@ -7,16 +7,12 @@ member::member()
 	hpnumber = "";		//핸드폰 번호
 	gender = "";		//성별
 	date_class = "";	//수업요일
-	date_start = "";		//시작일
+	date_start = "";	//시작일
 	date_end = "";		//종료일
 	trainer = "";		//담당 트레이너
-
-	//int, bool 변수
+	clothes = "";		//운동복 대여여부
+	time_class = "";	//수업시간
 	member_number = 0;	//회원번호
-	
-	clothes = false;	//운동복 대여여부
-	time_class = 0;		//수업시간
-
 	member* next = nullptr;
 }
 
@@ -37,9 +33,8 @@ member* member_list::member_location(const int& member_number)
 void member_list::member_profile(member* ptr_member) const
 {
 	cout << "회원 번호 | 이름 | 핸드폰 번호 | 성별 | 회원권 시작일 | 회원권 종료일 | 운동복 대여 여부" << endl << endl;
-	cout << ptr_member->member_number + 1 << " " << ptr_member->name << " " << ptr_member->name << " "
-		<< ptr_member->hpnumber << " " << ptr_member->gender << " " << ptr_member->date_start << " "
-		<< ptr_member->date_end << " " << ptr_member->clothes << endl;
+	cout << ptr_member->member_number + 1 << " " << ptr_member->name << " " << " "<< ptr_member->hpnumber << " " << ptr_member->gender 
+		<< " " << ptr_member->date_start << " " << ptr_member->date_end << " " << ptr_member->clothes << endl << endl;
 }
 
 //member_list의 생성함수
@@ -53,7 +48,7 @@ member_list::member_list()
 
 void member_list::add_member()
 {
-	member* new_member = new member(); //member 인스턴스 동적할당
+	member* new_member = new member; //member 객체 동적할당
 
 	string _name, _hpnumber, _gender, _date_start, _date_end, _clothes;
 	int _membership;
@@ -92,6 +87,8 @@ void member_list::add_member()
 
 	tail->next = new_member; //next, tail변수가 추가된 회원 객체를 가리키도록 한다.
 	tail = new_member;
+
+	member_profile(new_member);
 }
 
 void member_list::rewrite_member()
@@ -141,7 +138,8 @@ void member_list::search_member() const
 {
 	member* this_member = head->next;
 	string str;
-	cout << "1. 회원 번호 검색 : " << endl << "2. 회원 이름 : " << endl << "번호를 입력해주세요. : ";
+
+	cout << "1. 회원 번호 검색" << endl << "2. 회원 이름" << endl << endl << "번호를 입력해주세요. : ";
 	cin >> member_Classification;
 	cout << endl;
 
@@ -149,22 +147,24 @@ void member_list::search_member() const
 	{
 	case 1:
 		cout << "회원번호를 입력해주세요. : ";
-
+		cin >> str;
 		while (this_member != NULL) //빈 공간이 나올때까지 반복
 		{
 			if (this_member->member_number == stoi(str)) member_profile(this_member); //회원 번호가 같으면 프로필(회원 정보)출력
 			this_member = this_member->next;
 		}
+		cout << "검색을 완료했습니다." << endl << endl;
 		break;
 
 	case 2:
 		cout << "이름 입력해주세요. : ";
-
+		cin >> str;
 		while (this_member != NULL) //빈 공간이 나올때까지 반복
 		{
 			if (this_member->name == str) member_profile(this_member); //이름이 같으면 프로필(회원 정보)출력
 			this_member = this_member->next;
 		}
+		cout << "검색을 완료했습니다." << endl << endl;
 		break;
 
 	default:
@@ -178,7 +178,7 @@ void member_list::print_member() const
 	member* current_location = head->next; //next : 다음 회원 객체의 주소
 
 	//빈 공간이 나올 때까지 회원 정보를 출력한다.
-	for (; current_location != NULL; current_location = current_location->next)
+	for (;current_location != NULL; current_location = current_location->next)
 		member_profile(current_location);
 
 	cout << "모든 회원 정보를 출력했습니다." << endl << endl;
