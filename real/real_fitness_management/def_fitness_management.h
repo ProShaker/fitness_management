@@ -62,19 +62,26 @@ void menu_fitness_management(member_list* member); //메뉴 함수
 
 string days_calculate(const string& _start_date, const int& membership); //멤버십 날짜 계산 함수
 
-// 스피닝 클래스 
-class spinning_member : public member_list
+class special_member_list : public member_list
 {
-
+	void add_member();				//회원 추가 함수
+	void rewrite_member();			//회원 정보 수정
+	void search_member() const;		//회원 검색 함수 
+	void print_member() const;		//회원 명부 출력 함수
+	void delete_member();			//회원 정보 삭제 함수
+};
+// 스피닝 클래스 
+class spinning_member : public special_member_list
+{
 };
 
 // PT 클래스 
-class pt_member : public member_list
+class pt_member : public special_member_list
 {
 };
 
 // 필라테스 클래스
-class pilates_member : public member_list
+class pilates_member : public special_member_list
 {
 };
 
