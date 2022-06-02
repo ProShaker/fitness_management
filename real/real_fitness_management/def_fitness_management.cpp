@@ -1,7 +1,8 @@
 #include "def_fitness_management.h"
 
 // 자주 사용하는 문자열
-string guideline = "회원 번호 | 이름 | 핸드폰 번호 | 성별 | 회원권 시작일 | 회원권 종료일 | 운동복 대여 여부 | 담당 트레이너 | 수업 요일 | 수업 시간\n";
+string guideline1 = "회원 번호 | 이름 | 핸드폰 번호 | 성별 | 회원권 시작일 | 회원권 종료일 | 운동복 대여 여부";
+string guideline2 = "회원 번호 | 이름 | 핸드폰 번호 | 성별 | 회원권 시작일 | 회원권 종료일 | 운동복 대여 여부 | 담당 트레이너 | 수업 요일 | 수업 시간\n";
 
 member::member()
 {
@@ -18,6 +19,10 @@ member::member()
 	member_number = 0;	//회원번호
 
 	member* next = nullptr; //다음 객체의 주소
+}
+
+member::~member()
+{
 }
 
 member* member_list::member_location(const int& member_number)
@@ -49,6 +54,10 @@ member_list::member_list()
 	member* start_node = new member;
 	head = start_node; //첫 번째 노드의 주소 저장(고정)
 	tail = start_node;
+}
+
+member_list::~member_list()
+{
 }
 
 void member_list::add_member()
@@ -93,7 +102,7 @@ void member_list::add_member()
 	tail->next = new_member; //노드의 next가 추가된 회원을 가리키킨다.
 	tail = new_member;		 //tail : 추가된 회원의 주소
 	
-	cout << guideline << endl;
+	cout << guideline1 << endl;
 	member_profile(new_member);
 	cout << "회원님의 정보가 입력됐습니다." << endl << endl;
 }
@@ -116,7 +125,7 @@ void member_list::rewrite_member()
 	{
 		cout << endl << endl;
 
-		cout << guideline << endl << endl;
+		cout << guideline1 << endl << endl;
 
 		member_profile(current_location);
 
@@ -159,7 +168,7 @@ void member_list::search_member() const
 		cout << "회원번호를 입력해주세요. : ";
 		cin >> member_Classification;
 
-		cout << guideline << endl;
+		cout << guideline1 << endl;
 
 		while (this_member != NULL) //빈 공간이 나올때까지 반복
 		{
@@ -175,7 +184,7 @@ void member_list::search_member() const
 		cout << "이름 입력해주세요. : ";
 		cin >> str;
 
-		cout << endl << guideline << endl;
+		cout << endl << guideline1 << endl;
 
 		while (this_member != NULL) //빈 공간이 나올때까지 반복
 		{
@@ -197,7 +206,7 @@ void member_list::print_member() const
 {
 	member* current_location = head->next; //next : 다음 회원 객체의 주소
 
-	cout << guideline << endl;
+	cout << guideline1 << endl;
 
 	//빈 공간이 나올 때까지 회원 정보를 출력한다.
 	for (;current_location != NULL; current_location = current_location->next)
@@ -311,6 +320,14 @@ string days_calculate(const string& _start_date, const int& membership) //멤버십
 	return to_string(_year * 10000 + _month * 100 + _day); //정수를 문자열로 변환 후 반환
 }
 
+special_member_list::special_member_list()
+{
+}
+
+special_member_list::~special_member_list()
+{
+}
+
 void special_member_list::add_member()
 {
 	member* new_member = new member; //member 객체 동적할당
@@ -366,7 +383,7 @@ void special_member_list::add_member()
 	tail->next = new_member; //노드의 next가 추가된 회원을 가리키킨다.
 	tail = new_member;		 //tail : 추가된 회원의 주소
 
-	cout << guideline << endl;
+	cout << guideline2 << endl;
 	member_profile(new_member);
 	cout << "회원님의 정보가 입력됐습니다." << endl << endl;
 }
@@ -420,4 +437,16 @@ void special_member_list::rewrite_member()
 		cout << "수업 시간(06:00 ~ 23:00) : ";
 		cin >> current_location->time_class;
 	}
+}
+
+pilates_member::~pilates_member()
+{
+}
+
+spinning_member::~spinning_member()
+{
+}
+
+pt_member::~pt_member()
+{
 }

@@ -1,8 +1,12 @@
 #include "def_fitness_management.h"
 
 int main()
-{
-	member_list* ptr_member = nullptr;
+{ 
+	member_list* ptr_member = nullptr;								// 메뉴함수에서 멤버함수에 접근할 변수
+	member_list* normal_member_startnode = new member_list;			// 일반회원의 스타트 노드 주소
+	member_list* spinning_member_startnode = new spinning_member;	// 스피닝회원의 스타트 노드 주소
+	member_list* pt_member_startnode = new pt_member;				// 피티회원의 스타트 노드 주소
+	member_list* pilates_member_startnode = new pilates_member;		// 필라테스회원의 스타트 노드 주소
 
 	while (1) 
 	{
@@ -18,25 +22,25 @@ int main()
 		if (member_Classification == NORMAL)
 		{
 			cout << "일반 회원을 선택하셨습니다." << endl << endl;
-			ptr_member = new member_list;
+			ptr_member = normal_member_startnode;
 		}
 
 		else if (member_Classification == SPINNING)
 		{
 			cout << "스피닝 회원을 선택하셨습니다." << endl << endl;
-			ptr_member = new spinning_member;
+			ptr_member = spinning_member_startnode;
 		}
 
 		else if (member_Classification == PT)
 		{
 			cout << "PT 회원을 선택하셨습니다." << endl << endl;
-			ptr_member = new pt_member;
+			ptr_member = pt_member_startnode;
 		}
 
 		else if (member_Classification == PILATES)
 		{
 			cout << "필라테스 회원을 선택하셨습니다." << endl << endl;
-			ptr_member = new pilates_member;
+			ptr_member = pilates_member_startnode;
 		}
 
 		else
@@ -47,7 +51,11 @@ int main()
 		menu_fitness_management(ptr_member);
 	}
 	
-	delete ptr_member; //동적할당된 객체의 메모리 해제
-
+	//동적할당된 객체의 메모리 해제
+	delete ptr_member; 
+	delete normal_member_startnode;
+	delete spinning_member_startnode;
+	delete pt_member_startnode;
+	delete pilates_member_startnode;
 	return 0;
 }

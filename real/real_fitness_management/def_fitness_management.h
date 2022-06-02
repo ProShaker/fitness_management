@@ -19,6 +19,7 @@ class member
 public:
 	int member_number;	//회원번호
 	member();
+	~member();
 
 //private으로 회원 정보를 보호
 private:
@@ -52,7 +53,7 @@ private:
 
 public:
 	member_list();
-
+	~member_list();
 	//스피닝, PT, 필라테스 클래스에서 오버라이딩
 	virtual void add_member();				//회원 추가 함수
 	virtual void rewrite_member();			//회원 정보 수정
@@ -69,6 +70,8 @@ string days_calculate(const string& _start_date, const int& membership); //멤버�
 class special_member_list : public member_list
 {
 public:
+	special_member_list();
+	~special_member_list();
 	void add_member();				//회원 추가 함수
 	void rewrite_member();			//회원 정보 수정
 };
@@ -82,6 +85,7 @@ public:
 		member* start_node = new member;
 		member* head = start_node;
 	}
+	~spinning_member();
 };
 
 // PT 클래스 
@@ -93,6 +97,7 @@ public:
 		member* start_node = new member;
 		member* head = start_node;
 	}
+	~pt_member();
 };
 
 // 필라테스 클래스
@@ -104,5 +109,6 @@ public:
 		member* start_node = new member;
 		member* head = start_node;
 	}
+	~pilates_member();
 };
 
